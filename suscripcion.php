@@ -1,3 +1,20 @@
+<?php
+require __DIR__ . '/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+require __DIR__ . '/src/database/connect_to_db.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
+
+    $stmt = $pdo->prepare("INSERT INTO suscriptores (email) VALUES (?)");
+    $stmt->execute([$email]);
+
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,7 +23,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="src/static/css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <title>Noticiero Informático</title>
+    <title>Suscripción - Noticiero Informático</title>
 </head>
 <body>
     <header>
@@ -32,9 +49,9 @@
         <a href="noticias.html" class="boton">Noticias</a>
         <a href="contacto.html" class="boton">Contacto</a>
     </div>
-
-    <div class="titulos">
-        <h2>Noticias destacadas</h2>
+    <div class="suscripcion-confirmacion">
+        <p class="suscripcion-confirmacion-titulo">¡Gracias por suscribirte!</p>
+        <p class="suscripcion-confirmacion-descripcion">Ahora recibirás las últimas novedades del mundo de la informática directamente en tu correo electrónico.</p>
     </div>
 </body>
     <footer>

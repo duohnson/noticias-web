@@ -9,4 +9,26 @@ CREATE TABLE articulos (
 );
 
 * Artículo de ejemplo
-INSERT INTO articulos (titulo, descripcion) VALUES ('Primer Articulo', 'Prueba de un articulo dinamico.');
+INSERT INTO articulos (titulo, descripcion, autor) VALUES ('Primer Articulo', 'Prueba de un articulo dinamico.', 'Admin');
+
+* Fix para timestamp
+
+Alter TABLE articulos
+ADD creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+* Subir noticias a la DB
+
+CREATE TABLE noticias (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  titulo VARCHAR(255),
+  descripcion TEXT,
+  creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO noticias (titulo, descripcion) VALUES ('Noticia 1', 'Descripción de la noticia 1');
+
+CREATE TABLE suscriptores (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(255) UNIQUE,
+  creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

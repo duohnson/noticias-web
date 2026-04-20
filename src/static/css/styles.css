@@ -10,6 +10,72 @@ header {
     justify-content: left;
 }
 
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: rgb(0, 0, 0);
+    color: #ffffff;
+    padding: 20px;
+    border-top: 2px solid #ffffff;
+    margin-top: 20px;
+}
+
+.footer-izquierda {
+    text-align: left;
+    flex: 1;
+    font-size: 14px;
+}
+
+.footer-derecha {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    max-width: 300px;
+}
+
+.footer-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.footer-link:hover {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+}
+
+.redes-sociales-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+    .insta {
+        width: 38px;
+        height: 38px;
+        margin: 5px;
+        padding-top: 2px;
+    }
+    .face {
+        width: 42px;
+        height: 42px;
+        margin: 5px;
+    }
+    .x {
+        width: 32px;
+        height: 32px;    
+        border: #ffffff solid 3px;
+        border-radius: 50%;
+        margin: 5px;
+        padding: 2px;
+    }
+}
+
 .logo {
     width: 50px;
     height: 50px;
@@ -90,6 +156,156 @@ header {
     box-shadow: #d6d6d6 3px 3px 1px;
 }
 
+.articulos {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    border: #5f5f5f3b solid 5px;
+    border-radius: 2px;
+    background-color: #a0a0a011;
+}
+
+.articulo {
+    padding: 3px;
+    margin: 3px;
+    width: 80%;
+}
+
+.art_titulo {
+    text-align: left;
+    font-size: 20px;
+    text-decoration: underline;
+    padding: 2px;
+}
+
+.art_titulo:hover {
+    color: #c22020;
+    text-decoration: none;
+    border: #c22020 solid 1px;
+    width: fit-content;
+}
+
+.art_descripcion {
+    text-align: justify;
+    font-size: 15px;
+}
+
+.art_creado_en {
+    text-align: right;
+    font-size: 12px;
+    color: #5f5f5f;
+}
+
+.art_autor {
+    text-align: left;
+    font-size: 15px;
+    color: #5f5f5f;
+    font-style: italic;
+}
+
+.suscribirse {
+    text-align: right;
+    color: #ffffff;
+    margin-top: 10px;
+}
+
+.suscribirse h3 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+}
+
+.suscribirse form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+.suscribirse input {
+    padding: 8px;
+    border: 1px solid #ffffff;
+    border-radius: 3px;
+    background-color: #333;
+    color: #ffffff;
+    width: 200px;
+}
+
+.suscribirse input::placeholder {
+    color: #ccc;
+}
+
+.suscribirse-boton {
+    background-color: rgb(0, 0, 0);
+    color: #ffffff;
+    padding: 5px 10px;
+    margin: 5px 10px;
+    text-decoration: none;
+    border: #ffffff solid 2px;
+    box-shadow: #d6d6d6 3px 3px 1px;
+    width: auto;
+    text-align: center;
+}
+
+.suscribirse button:hover {
+    background-color: #f00909;
+}
+
+.suscripcion-confirmacion {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    color: #000000;
+    margin-top: 10px;
+    flex-direction: column;
+    background-color: aliceblue;
+    border: #000000 solid 2px;
+}
+
+.suscripcion-confirmacion-titulo {
+    font-size: 30px;
+    font-weight: bold;
+    border-bottom: #000000 solid 2px;
+}
+
+.suscripcion-confirmacion-descripcion {
+    font-size: 20px;
+}
+
+.contacto-formulario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px;
+    padding: 5px;
+    justify-content: center;
+    text-align: center;
+}
+
+.contacto-formulario input,
+.contacto-formulario textarea {
+    padding: 10px;
+    border: #000000 solid 1px;
+    border-radius: 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+    width: 300px;
+}
+
+.contacto-descripcion {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
 @media (max-width: 768px) {
 
     header {
@@ -101,6 +317,40 @@ header {
     .redes-sociales {
         margin: 0px;
         justify-content: center;
+    }
+
+    footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .footer-izquierda {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .footer-derecha {
+        align-items: center;
+        text-align: center;
+        max-width: none;
+    }
+
+    .redes-sociales-footer {
+        justify-content: center;
+    }
+
+    .suscribirse {
+        text-align: center;
+    }
+
+    .suscribirse form {
+        align-items: center;
+    }
+
+    .suscribirse input {
+        width: 100%;
+        max-width: 250px;
     }
 
 }
