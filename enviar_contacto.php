@@ -1,13 +1,70 @@
 <?php
+require __DIR__ . '/vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// Cargar variables de entorno
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 $nombre = '';
 $email = '';
 $mensaje = '';
+$enviado = false;
+$error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre = $_POST['nombre'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $mensaje = $_POST['mensaje'] ?? '';
+    $nombre = trim($_POST['nombre'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $mensaje = trim($_POST['mensaje'] ?? '');
+
+    // Validación básica
+    if (empty($nombre) || empty($email) || empty($mensaje)) {
+        $error = 'Por favor completa todos los campos.';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = 'El correo electrónico no es válido.';
+    } else {
+        // Enviar correo
+        try {
+            $mail = new PHPMailer(true);
+            
+            // Configuración del servidor SMTP
+            $mail->isSMTP();
+            $mail->Host = $_ENV['SMTP_HOST'] ?? 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = $_ENV['SMTP_USER'];
+            $mail->Password = $_ENV['SMTP_PASS'];
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = $_ENV['SMTP_PORT'] ?? 587;
+
+            // Remitentes y destinatarios
+            $mail->setFrom($_ENV['SMTP_FROM'], $_ENV['SMTP_FROM_NAME'] ?? 'Blog Web');
+            $mail->addAddress($_ENV['SMTP_FROM']);
+            $mail->addReplyTo($email, $nombre);
+
+            // Contenido del correo
+            $mail->isHTML(true);
+            $mail->Subject = "Nuevo mensaje de contacto de: $nombre";
+            $mail->Body = "
+                <html>
+                <body>
+                    <h2>Nuevo mensaje de contacto</h2>
+                    <p><strong>Nombre:</strong> " . htmlspecialchars($nombre) . "</p>
+                    <p><strong>Correo:</strong> " . htmlspecialchars($email) . "</p>
+                    <p><strong>Mensaje:</strong></p>
+                    <p>" . nl2br(htmlspecialchars($mensaje)) . "</p>
+                </body>
+                </html>
+            ";
+            $mail->AltBody = "Nombre: $nombre\nCorreo: $email\nMensaje:\n$mensaje";
+
+            $mail->send();
+            $enviado = true;
+        } catch (Exception $e) {
+            $error = "Error al enviar el mensaje: " . $mail->ErrorInfo;
+        }
+    }
 }
 
 ?>
@@ -49,6 +106,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div>
         <hr>
     </div>
+    
+    <?php if ($enviado): ?>
     <div class="suscripcion-confirmacion">
         <p class="suscripcion-confirmacion-titulo">¡Mensaje enviado!</p>
         <p class="suscripcion-confirmacion-descripcion">Gracias por contactarnos, te responderemos lo antes posible.</p>
@@ -61,6 +120,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="contacto.html" class="boton">Volver</a>
         </div>
     </div>
+    <?php elseif ($error): ?>
+    <div class="suscripcion-confirmacion">
+        <p class="suscripcion-confirmacion-titulo">Error al enviar el mensaje</p>
+        <p class="suscripcion-confirmacion-descripcion" style="color: #d32f2f;"><?php echo htmlspecialchars($error); ?></p>
+        <div class="botones">
+            <a href="contacto.html" class="boton">Intentar de nuevo</a>
+        </div>
+    </div>
+    <?php endif; ?>
+    
     <div>
         <hr>
     </div>
